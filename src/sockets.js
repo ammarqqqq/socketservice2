@@ -9,7 +9,7 @@ const request = require('request');
 const fs = require('fs');
 
 const serviceLookupHandler = require("./consulLookup.js");
-
+const server=process.env.DNSDOMAIN;
 // TODO, this is unsafe, however its only used on delete which should be removed anyway
 
 
@@ -23,14 +23,15 @@ module.exports.listen = function(app){
 
       return new Promise(
         function(resolve , reject) {
-          serviceLookupHandler.serviceLookup("authenticationservice-8080", 'authenticated').then(serverAddress => {
+          //serviceLookupHandler.serviceLookup("authenticationservice-8080", 'authenticated').then(serverAddress => {
             request({
-                url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
+                //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
+                url: "https://"+ server + ":8040/authenticationservice" //URL to hit
                 qs: {time: +new Date()}, //Query string data
                 method: 'GET',
                 headers: {
                   // 'host': req.headers.host,
-                  'host': 'local.monifair.com',
+                  'host': 'bankinstance3.monifair.com',
                   'servicename': config.serviceName,
                   'authorization': token
                 },
@@ -54,7 +55,7 @@ module.exports.listen = function(app){
                   }
                 }
             });
-          });
+          //});
         }
       );
     };
@@ -64,18 +65,19 @@ module.exports.listen = function(app){
        return new Promise(
          function(resolve , reject) {
 
-           serviceLookupHandler.serviceLookup("transactionservice-8080", 'savetransactionalaccountinfo').then(serverAddress => {
-             console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
+          // serviceLookupHandler.serviceLookup("transactionservice-8080", 'savetransactionalaccountinfo').then(serverAddress => {
+             //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
              console.log('DATA(BODY): ', data)
              request({
-                 url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
+                // url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
+                  url: "https://"+ server + ":8020/transactionservice" //URL to hit
                  port: 443,
                  qs: {time: + new Date()}, //Query string data
                  method: 'POST',
                  json: data,
                  headers: {
                   //  'host': req.headers.host,
-                  'host': 'local.monifair.com',
+                  'host': 'bankinstance3.monifair.com',
                    'servicename': config.serviceName,
                    'authorization': token
                  },
@@ -90,10 +92,10 @@ module.exports.listen = function(app){
              resolve(response.body);
            }
        });
-         }).catch(err => {
+      /*   }).catch(err => {
            console.log(err)
            reject(err);
-         })
+         })*/
        });
     };
 
@@ -103,17 +105,18 @@ module.exports.listen = function(app){
 
        return new Promise(
          function(resolve , reject) {
-           serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'createaccount').then(serverAddress => {
-             console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath)
+           //serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'createaccount').then(serverAddress => {
+             //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath)
              request({
-                 url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
+               url: "https://"+ server + ":8039/userandaccountservice" //URL to hit
+                 // url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                  port: 443,
                  qs: {time: + new Date()}, //Query string data
                  method: 'POST',
                  json: data,
                  headers: {
                   //  'host': req.headers.host,
-                  'host': 'local.monifair.com',
+                  'host': 'bankinstance3.monifair.com',
                   'servicename': config.serviceName,
                   'authorization':token
                  },
@@ -128,10 +131,10 @@ module.exports.listen = function(app){
              resolve(response.body);
            }
        });
-         }).catch(err => {
+        /* }).catch(err => {
            console.log(err)
            reject(err);
-         })
+         })*/
        });
     };
 
@@ -139,17 +142,18 @@ module.exports.listen = function(app){
 
       return new Promise(
         function(resolve , reject) {
-          serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'getuserbymobile').then(serverAddress => {
-            console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
+          //serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'getuserbymobile').then(serverAddress => {
+            //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
             request({
-                url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
+              url: "https://"+ server + ":8039/microservices_userandaccountservice" //URL to hit
+               //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                 port: 443,
                 qs: {time: + new Date()}, //Query string data
                 method: 'GET',
                 json: {mobileNumber:mobileNumber},
                 headers: {
                  //  'host': req.headers.host,
-                 'host': 'local.monifair.com',
+                 'host': 'bankinstance3.monifair.com',
                   'servicename': config.serviceName,
                   'authorization': token
                 },
@@ -164,10 +168,10 @@ module.exports.listen = function(app){
             resolve(response.body);
           }
       });
-        }).catch(err => {
+      /* }).catch(err => {
           console.log(err)
           reject(err);
-        })
+        })*/
       });
     }
 
@@ -178,16 +182,17 @@ module.exports.listen = function(app){
 
       return new Promise(
         function(resolve , reject) {
-          serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'getallaccountsforuserbytoken').then(serverAddress => {
-            console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
+          //serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'getallaccountsforuserbytoken').then(serverAddress => {
+          //  console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
             request({
-                url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
+               url: "https://"+ server + ":8039/microservices_userandaccountservice" //URL to hit
+                //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                 port: 443,
                 qs: {time: + new Date()}, //Query string data
                 method: 'GET',
                 headers: {
                  //  'host': req.headers.host,
-                 'host': 'local.monifair.com',
+                 'host': 'bankinstance3.monifair.com',
                   'servicename': config.serviceName,
                   'authorization': token
                 },
@@ -202,10 +207,10 @@ module.exports.listen = function(app){
             resolve(JSON.parse(response.body));
           }
       });
-        }).catch(err => {
+        /*}).catch(err => {
           console.log(err)
           reject(err);
-        })
+        })*/
       });
    };
 
@@ -216,10 +221,11 @@ module.exports.listen = function(app){
 
       return new Promise(
         function(resolve , reject) {
-          serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'getallaccountsforuserbyid/'+id).then(serverAddress => {
-            console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
+          //serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'getallaccountsforuserbyid/'+id).then(serverAddress => {
+            //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
             request({
-                url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
+                url: "https://"+ server + ":8039/microservices_userandaccountservice" //URL to hit
+                //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                 port: 443,
                 qs: {time: + new Date()}, //Query string data
                 method: 'GET',
@@ -239,10 +245,10 @@ module.exports.listen = function(app){
             resolve(JSON.parse(response.body));
           }
       });
-        }).catch(err => {
+        /*}).catch(err => {
           console.log(err)
           reject(err);
-        })
+        })*/
       });
    };
 
@@ -250,10 +256,11 @@ module.exports.listen = function(app){
 
       return new Promise(
         function(resolve , reject) {
-          serviceLookupHandler.serviceLookup("transactionservice-8080", 'createethereumaccount').then(serverAddress => {
-            console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
+          //serviceLookupHandler.serviceLookup("transactionservice-8080", 'createethereumaccount').then(serverAddress => {
+            //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
             request({
-                url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
+                url: "https://"+ server + ":8020/microservices_transactionservice" //URL to hit
+                //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                 port: 443,
                 qs: {time: + new Date()}, //Query string data
                 method: 'GET',
@@ -273,10 +280,10 @@ module.exports.listen = function(app){
             resolve(JSON.parse(response.body));
           }
       });
-        }).catch(err => {
+      /*  }).catch(err => {
           console.log(err)
           reject(err);
-        })
+        })*/
       });
    };
 
@@ -291,10 +298,11 @@ module.exports.listen = function(app){
    createContractAddress = function(data) {
      return new Promise(
        function(resolve , reject) {
-         serviceLookupHandler.serviceLookup("transactionservice-8080", 'getaccountcontract').then(serverAddress => {
-           console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
+         //serviceLookupHandler.serviceLookup("transactionservice-8080", 'getaccountcontract').then(serverAddress => {
+           //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
            request({
-               url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
+                 url: "https://"+ server + ":8020/microservices_transactionservice" //URL to hit
+               //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                port: 443,
                qs: {time: + new Date()}, //Query string data
                method: 'POST',
@@ -315,10 +323,10 @@ module.exports.listen = function(app){
            resolve(response.body);
          }
      });
-       }).catch(err => {
+      /* }).catch(err => {
          console.log(err)
          reject(err);
-       })
+       })*/
      });
    }
 
@@ -326,10 +334,11 @@ module.exports.listen = function(app){
      console.log("getbalancemethod hit")
      return new Promise(
        function(resolve , reject) {
-         serviceLookupHandler.serviceLookup("transactionservice-8080", 'getuseramount').then(serverAddress => {
-           console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
+         //serviceLookupHandler.serviceLookup("transactionservice-8080", 'getuseramount').then(serverAddress => {
+           //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
            request({
-               url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
+                 url: "https://"+ server + ":8020/microservices_transactionservice" //URL to hit
+               //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                port: 443,
                qs: {time: + new Date()}, //Query string data
                method: 'POST',
@@ -350,10 +359,10 @@ module.exports.listen = function(app){
            resolve(response.body);
          }
      });
-       }).catch(err => {
+      /* }).catch(err => {
          console.log(err)
          reject(err);
-       })
+       })*/
      });
    }
 
@@ -361,10 +370,11 @@ module.exports.listen = function(app){
      console.log("data in linkcontractaddress: ", data)
      return new Promise(
        function(resolve , reject) {
-         serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'addcontractaddress').then(serverAddress => {
-           console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
-           request({
-               url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
+         //serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'addcontractaddress').then(serverAddress => {
+           //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
+            request({
+                 url: "https://"+ server + ":8039/microservices_userandaccountservice" //URL to hit
+               //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                port: 443,
                qs: {time: + new Date()}, //Query string data
                method: 'POST',
@@ -386,10 +396,10 @@ module.exports.listen = function(app){
            resolve(response.body);
          }
      });
-       }).catch(err => {
+      /* }).catch(err => {
          console.log(err)
          reject(err);
-       })
+       })*/
      });
    }
 
