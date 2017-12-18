@@ -8,7 +8,7 @@ const logger = require('./logger.js')
 const request = require('request');
 const fs = require('fs');
 
-const serviceLookupHandler = require("./consulLookup.js");
+//const serviceLookupHandler = require("./consulLookup.js");
 const server=process.env.DNSDOMAIN;
 // TODO, this is unsafe, however its only used on delete which should be removed anyway
 
@@ -26,7 +26,7 @@ module.exports.listen = function(app){
           //serviceLookupHandler.serviceLookup("authenticationservice-8080", 'authenticated').then(serverAddress => {
             request({
                 //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
-                url: "https://"+ server + ":" + "8040" + "/" + "authenticationservice", //URL to hit
+                url: "https://"+ server + ":" + "8040" + "/" + "microservices_authenticationservice", //URL to hit
                 qs: {time: +new Date()}, //Query string data
                 method: 'GET',
                 headers: {
@@ -70,7 +70,7 @@ module.exports.listen = function(app){
              console.log('DATA(BODY): ', data)
              request({
                 // url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
-                  url: "https://"+ server + ":8020/transactionservice", //URL to hit
+                  url: "https://"+ server + ":8020/microservices_transactionservice", //URL to hit
                  port: 443,
                  qs: {time: + new Date()}, //Query string data
                  method: 'POST',
@@ -108,7 +108,7 @@ module.exports.listen = function(app){
            //serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'createaccount').then(serverAddress => {
              //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath)
              request({
-               url: "https://"+ server + ":8039/userandaccountservice" ,//URL to hit
+               url: "https://"+ server + ":8039/microservices_userandaccountservice" ,//URL to hit
                  // url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                  port: 443,
                  qs: {time: + new Date()}, //Query string data
@@ -231,7 +231,7 @@ module.exports.listen = function(app){
                 method: 'GET',
                 headers: {
                  //  'host': req.headers.host,
-                 'host': 'local.monifair.com',
+                 'host': 'bankinstance3.monifair.com',
                   'servicename': config.serviceName
                 },
                 key: fs.readFileSync('/certs/chain.key'),
@@ -266,7 +266,7 @@ module.exports.listen = function(app){
                 method: 'GET',
                 headers: {
                  //  'host': req.headers.host,
-                 'host': 'local.monifair.com',
+                 'host': 'bankinstance3.monifair.com',
                   'servicename': config.serviceName
                 },
                 key: fs.readFileSync('/certs/chain.key'),
@@ -309,7 +309,7 @@ module.exports.listen = function(app){
                json: data,
                headers: {
                 //  'host': req.headers.host,
-                'host': 'local.monifair.com',
+                'host': 'bankinstance3.monifair.com',
                  'servicename': config.serviceName
                },
                key: fs.readFileSync('/certs/chain.key'),
@@ -345,7 +345,7 @@ module.exports.listen = function(app){
                json: data,
                headers: {
                 //  'host': req.headers.host,
-                'host': 'local.monifair.com',
+                'host': 'bankinstance3.monifair.com',
                 'servicename': config.serviceName
                },
                key: fs.readFileSync('/certs/chain.key'),
@@ -381,7 +381,7 @@ module.exports.listen = function(app){
                json: data,
                headers: {
                 //  'host': req.headers.host,
-                'host': 'local.monifair.com',
+                'host': 'bankinstance3.monifair.com',
                 'servicename': config.serviceName,
                 'authorization': token
                },
