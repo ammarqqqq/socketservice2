@@ -26,8 +26,7 @@ module.exports.listen = function(app){
           //serviceLookupHandler.serviceLookup("authenticationservice-8080", 'authenticated').then(serverAddress => {
             request({
                 //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
-                //url: "https://"+ server + ":" + "8040" + "/" + "microservices_authenticationservice", //URL to hit
-                  url: "https://"+ server + "/microservices_authenticationservice",
+                url: "https://"+ server + ":" + "8040" + "/" + "microservices_authenticationservice", //URL to hit
                 qs: {time: +new Date()}, //Query string data
                 method: 'GET',
                 headers: {
@@ -71,8 +70,7 @@ module.exports.listen = function(app){
              console.log('DATA(BODY): ', data)
              request({
                 // url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
-                  //url: "https://"+ server + ":8020/microservices_transactionservice", //URL to hit
-                  url: "https://"+ server + "/microservices_transactionservice", //URL to hit
+                  url: "https://"+ server + ":8020/microservices_transactionservice", //URL to hit
                  port: 443,
                  qs: {time: + new Date()}, //Query string data
                  method: 'POST',
@@ -110,8 +108,7 @@ module.exports.listen = function(app){
            //serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'createaccount').then(serverAddress => {
              //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath)
              request({
-               //url: "https://"+ server + ":8039/microservices_userandaccountservice" ,//URL to hit
-               url: "https://"+ server + "/microservices_userandaccountservice" ,//URL to hit
+               url: "https://"+ server + ":8039/microservices_userandaccountservice" ,//URL to hit
                  // url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                  port: 443,
                  qs: {time: + new Date()}, //Query string data
@@ -148,8 +145,7 @@ module.exports.listen = function(app){
           //serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'getuserbymobile').then(serverAddress => {
             //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
             request({
-              //url: "https://"+ server + ":8039/microservices_userandaccountservice" , //URL to hit
-                url: "https://"+ server + "/microservices_userandaccountservice" , //URL to hit
+              url: "https://"+ server + ":8039/microservices_userandaccountservice" , //URL to hit
                //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                 port: 443,
                 qs: {time: + new Date()}, //Query string data
@@ -189,8 +185,7 @@ module.exports.listen = function(app){
           //serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'getallaccountsforuserbytoken').then(serverAddress => {
           //  console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
             request({
-               //url: "https://"+ server + ":8039/microservices_userandaccountservice" , //URL to hit
-               url: "https://"+ server + "/microservices_userandaccountservice" , //URL to hit
+               url: "https://"+ server + ":8039/microservices_userandaccountservice" , //URL to hit
                 //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                 port: 443,
                 qs: {time: + new Date()}, //Query string data
@@ -229,8 +224,7 @@ module.exports.listen = function(app){
           //serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'getallaccountsforuserbyid/'+id).then(serverAddress => {
             //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
             request({
-                //url: "https://"+ server + ":8039/microservices_userandaccountservice" , //URL to hit
-                  url: "https://"+ server + "/microservices_userandaccountservice" , //URL to hit
+                url: "https://"+ server + ":8039/microservices_userandaccountservice" , //URL to hit
                 //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                 port: 443,
                 qs: {time: + new Date()}, //Query string data
@@ -265,8 +259,7 @@ module.exports.listen = function(app){
           //serviceLookupHandler.serviceLookup("transactionservice-8080", 'createethereumaccount').then(serverAddress => {
             //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
             request({
-                //url: "https://"+ server + ":8020/microservices_transactionservice" , //URL to hit
-                url: "https://"+ server + "/microservices_transactionservice" , //URL to hit
+                url: "https://"+ server + ":8020/microservices_transactionservice" , //URL to hit
                 //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                 port: 443,
                 qs: {time: + new Date()}, //Query string data
@@ -308,8 +301,7 @@ module.exports.listen = function(app){
          //serviceLookupHandler.serviceLookup("transactionservice-8080", 'getaccountcontract').then(serverAddress => {
            //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
            request({
-              //url: "https://"+ server + ":8020/microservices_transactionservice" , //URL to hit
-              url: "https://"+ server + "/microservices_transactionservice" , //URL to hit
+                 url: "https://"+ server + ":8020/microservices_transactionservice" , //URL to hit
                //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                port: 443,
                qs: {time: + new Date()}, //Query string data
@@ -345,8 +337,7 @@ module.exports.listen = function(app){
          //serviceLookupHandler.serviceLookup("transactionservice-8080", 'getuseramount').then(serverAddress => {
            //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
            request({
-                 //url: "https://"+ server + ":8020/microservices_transactionservice" , //URL to hit
-                 url: "https://"+ server + "/microservices_transactionservice" , //URL to hit
+                 url: "https://"+ server + ":8020/microservices_transactionservice" , //URL to hit
                //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                port: 443,
                qs: {time: + new Date()}, //Query string data
@@ -382,8 +373,7 @@ module.exports.listen = function(app){
          //serviceLookupHandler.serviceLookup("userandaccountservice-8080", 'addcontractaddress').then(serverAddress => {
            //console.log("server logs : " ,serverAddress.address,' ' ,  serverAddress.port,' ' ,serverAddress.routePath  )
             request({
-                 //url: "https://"+ server + ":8039/microservices_userandaccountservice" ,//URL to hit
-               url: "https://"+ server + "/microservices_userandaccountservice" ,//URL to hit
+                 url: "https://"+ server + ":8039/microservices_userandaccountservice" ,//URL to hit
                //url: "https://"+ serverAddress.address + ":" + serverAddress.port + "/" + serverAddress.routePath , //URL to hit
                port: 443,
                qs: {time: + new Date()}, //Query string data
